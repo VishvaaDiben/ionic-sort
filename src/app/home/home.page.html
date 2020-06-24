@@ -1,20 +1,61 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>
-      Blank
+      Search & Sorted List
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content padding>
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionChange)="setFilteredItems()"
+    placeholder="Type the date in DD/MM/YYYY"
+  ></ion-searchbar>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+
+  <!-- <ion-datetime
+    placeholder="select date"
+    [max]="today"
+    [(ngModel)]="selectedDate"
+    (ionChange)="parseDate()"
+    >{{todate}}</ion-datetime
+  > -->
+
+  <ion-list>
+    <div *ngIf="searchTerm == '' ; else elseTemplate">
+      <ion-item *ngFor="let item of items" class="listClass">
+        <ion-col size="6">
+          <ion-label>
+            {{item.Island_name}}
+          </ion-label>
+        </ion-col>
+        <ion-col size="4">
+          <ion-label>
+            {{ item.Visitor_date }}
+          </ion-label>
+        </ion-col>
+        <ion-label>
+          {{item.total_visits}}
+        </ion-label>
+      </ion-item>
+    </div>
+    <ng-template #elseTemplate>
+      <ion-item *ngFor="let thing of things">
+        <ion-col size="6">
+          <ion-label>
+            {{thing.Island_name}}
+          </ion-label>
+        </ion-col>
+        <ion-col size="4">
+          <ion-label>
+            {{ thing.Visitor_date }}
+          </ion-label>
+        </ion-col>
+        <ion-label>
+          {{thing.total_visits}}
+        </ion-label>
+      </ion-item>
+    </ng-template>
+  </ion-list>
 </ion-content>
